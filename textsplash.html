@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>text splash</title>
+	</head>
+	<style>
+	* {
+		margin:0;
+		padding:0;
+		border:0;
+	}
+	html,body {
+		width: 100%;
+		height: 100%;
+		overflow:hidden;
+	}
+	#input_panel {
+		position:absolute;
+		left:0;
+		right:0;
+		bottom:0;
+		height: 60px;
+		text-align:center;
+		background: #eee;
+		border-top: 1px solid #ddd;
+		padding-top:20px;
+	}
+	#input_panel a {
+		font-size:12px;
+		color: #000;
+		text-decoration:none;
+	}
+	input[type="text"] {
+		background: #fff;
+		border: 1px solid #999;
+		border-radius: 5px;
+		-moz-border-radius:5px;
+		-webkit-border-radius:3px;
+		font-size:18px;
+		padding:5px;
+	}
+	.splash_msg {
+		font-size:150px;
+		font-family: Arial, Verdana;
+		color: navy;
+		text-shadow: 0px 0px 5px #000;
+		position:absolute;
+		left:30%;
+		top:30%;
+	}
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	function animate_input(str_input, elem) {
+		elem.append(str_input);
+		
+		elem.animate({
+		    opacity: 0,
+		    fontSize: '20px',
+		  }, 3000, function() {
+			elem.css({opacity:"", fontSize:""});
+		    elem.remove();
+		  });
+	}
+	var time_count = 600;
+	var MAX_TIME = 400;
+	var splash_elem = $(document.createElement('div'));
+	$(document).ready(function() {
+		$('#user_input').bind('keyup', function(e){
+			if (new Date().getTime() - time_count > MAX_TIME) {
+				splash_elem = $(document.createElement('div'));
+				splash_elem.addClass('splash_msg');
+				$('body').append(splash_elem);
+				var left=Math.floor(Math.random()*($(window).width()- 200));
+				var top=Math.floor(Math.random()*($(window).height() - 150));
+				splash_elem.css('left', left).css('top',top);
+			}
+			time_count = new Date().getTime();
+			animate_input($(this).attr('value'), splash_elem);
+			$(this).attr('value','');
+		});
+	});
+	</script>
+	<body>
+		<div id="input_panel">
+		<p><input type="text" id="user_input"/></p>
+		<p><a href="http://www.twitter.com/bjorkstam">@bjorkstam</a></p>
+		</div>
+	</body>
+</html>
